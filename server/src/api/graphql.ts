@@ -1,5 +1,5 @@
 import { ApolloServer } from "apollo-server-express";
-import { typeDefs } from "../graphql/schema";
+import { schema } from "../graphql/schema";
 import { resolvers } from "../graphql/resolvers";
 import { createContext } from "../graphql/context";
 
@@ -7,7 +7,7 @@ import { createContext } from "../graphql/context";
 // const apolloServer = new ApolloServer({typeDefs,resolvers});
 
 const gqlServer = new ApolloServer({
-    typeDefs,
+    schema,
     resolvers,
     context:createContext,
   });

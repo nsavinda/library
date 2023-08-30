@@ -1,9 +1,27 @@
 
 export const resolvers = {
     Query:{
-        users: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.user.findMany()
-    }
+        users: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.user.findMany(),
+        posts: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.post.findMany()
+    },
+
 }
+
+
+// import { PrismaClient } from "@prisma/client";
+
+// const prisma = new PrismaClient();
+
+// export const resolvers = {
+//     Query: {
+//         users: async (_parent: any, _args: any, ctx: any) => {
+//             return await ctx.prisma.user.findMany();
+//         },
+//         posts: async (_parent: any, _args: any, ctx: any) => {
+//             return await ctx.prisma.post.findMany();
+//         }
+//     }
+// };
 
 
 // export const resolvers = {
