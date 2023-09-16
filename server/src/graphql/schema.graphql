@@ -2,6 +2,36 @@
 ### Do not make changes to this file directly
 
 
+type Author {
+  books: [Book]
+  dob: Datetime
+  id: String
+  name: String
+}
+
+type Book {
+  author: Author
+  authorId: String
+  id: String
+  isbn: String
+  publisher: String
+  title: String
+}
+
+scalar Datetime
+
+type Mutation {
+  createAuthor(dob: String!, name: String!): Author!
+  createBook(authorId: String!, isbn: String!, publisher: String!, title: String!): Book!
+  createPost(title: String!, userId: String!): Post!
+  createUser(email: String!, name: String!, username: String!): User!
+  deleteAuthor(id: String!): Author!
+  deleteBook(id: String!): Book!
+  deletePost(id: String!): Post!
+  deleteUser(id: String!): User!
+  deleteUserWithPosts(id: String!): User!
+}
+
 type Post {
   id: String
   title: String
@@ -10,11 +40,14 @@ type Post {
 }
 
 type Query {
+  authors: [Author]!
+  books: [Book]!
   posts: [Post]!
   users: [User]!
 }
 
 type User {
+  email: String
   id: String
   name: String
   posts: [Post]

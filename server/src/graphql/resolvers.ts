@@ -2,8 +2,13 @@
 export const resolvers = {
     Query:{
         users: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.user.findMany(),
-        posts: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.post.findMany()
+        posts: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.post.findMany(),
+        authors: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.author.findMany(),
+        books: async (_parent: any, _args: any, ctx: any) => await ctx.prisma.book.findMany(),
+
     },
+
+
 
 }
 
