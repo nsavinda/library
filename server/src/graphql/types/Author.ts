@@ -40,7 +40,7 @@ export const AuthorQuery = extendType({
 })
 
 
-export const AuthorMutation = extendType({
+export const AuthorCreate = extendType({
     type:'Mutation',
     definition(t){
         t.nonNull.field('createAuthor', {
@@ -66,7 +66,7 @@ export const AuthorMutation = extendType({
 
 //  delete author
 
-export const AuthorDeleteMutation = extendType({
+export const AuthorDelete = extendType({
     type:'Mutation',
     definition(t){
         t.nonNull.field('deleteAuthor',{

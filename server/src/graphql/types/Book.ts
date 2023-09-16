@@ -36,7 +36,7 @@ export const BookQuery = extendType({
     }
 })
 
-export const BookMutation = extendType({
+export const BookCreate = extendType({
     type:'Mutation',
     definition(t){
         t.nonNull.field('createBook',{
@@ -63,7 +63,7 @@ export const BookMutation = extendType({
 })
 
 
-export const BookDeleteMutation = extendType({
+export const BookDelete = extendType({
     type:'Mutation',
     definition(t) {
         t.nonNull.field('deleteBook',{

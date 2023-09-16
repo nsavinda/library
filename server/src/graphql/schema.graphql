@@ -29,7 +29,6 @@ type Mutation {
   deleteBook(id: String!): Book!
   deletePost(id: String!): Post!
   deleteUser(id: String!): User!
-  deleteUserWithPosts(id: String!): User!
 }
 
 type Post {

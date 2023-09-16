@@ -40,7 +40,7 @@ export const PostQuery = extendType({
 
 
 // mutations
-export const PostMutation = extendType({
+export const PostCreate = extendType({
     type:'Mutation',
     definition(t){
         t.nonNull.field('createPost',{
@@ -63,7 +63,7 @@ export const PostMutation = extendType({
 })
 
 //  delete post
-export const PostDeleteMutation = extendType({
+export const PostDelete = extendType({
     type:'Mutation',
     definition(t){
         t.nonNull.field('deletePost',{

@@ -37,7 +37,7 @@ export const UserQuery = extendType({
     }
 })
 
-export const UserMutation = extendType({
+export const UserCreate = extendType({
     type:'Mutation',
     definition(t){
         t.nonNull.field('createUser',{
@@ -67,32 +67,6 @@ export const UserDelete = extendType({
     type:'Mutation',
     definition(t){
         t.nonNull.field('deleteUser',{
-            type:User,
-            args:{
-                id: nonNull(stringArg()),
-            },
-            async resolve(_parent, args, ctx){
-                const {id} = args;
-                return await ctx.prisma.user.delete({
-                    where:{
-                        id
-                    },
-                    include:{
-                        posts:true
-                    }
-                })
-            }
-        })
-    }
-})
-
-
-// delete user with posts
-
-export const UserDeleteWithPosts = extendType({
-    type:'Mutation',
-    definition(t){
-        t.nonNull.field('deleteUserWithPosts',{
             type:User,
             args:{
                 id: nonNull(stringArg()),
