@@ -1,4 +1,4 @@
-import { objectType, extendType } from "nexus";
+import { objectType, extendType, nonNull, stringArg } from "nexus";
 import { User } from "./User";
 
 export const Post = objectType({
@@ -24,6 +24,8 @@ export const Post = objectType({
 })
 
 
+
+
 export const PostQuery = extendType({
     type:'Query',
     definition(t){
@@ -35,6 +37,52 @@ export const PostQuery = extendType({
         })
     }
 })
+
+
+// mutations
+export const PostMutation = extendType({
+    type:'Mutation',
+    definition(t){
+        t.nonNull.field('createPost',{
+            type:'Post',
+            args:{
+                title: nonNull(stringArg()),
+                userId: nonNull(stringArg())
+            },
+            async resolve(_parent, args, ctx){
+                const {title, userId} = args;
+                return await ctx.prisma.post.create({
+                    data:{
+                        title,
+                        userId
+                    }
+                })
+            }
+        })
+    }
+})
+
+//  delete post
+export const PostDeleteMutation = extendType({
+    type:'Mutation',
+    definition(t){
+        t.nonNull.field('deletePost',{
+            type:'Post',
+            args:{
+                id: nonNull(stringArg())
+            },
+            async resolve(_parent, args, ctx){
+                const {id} = args;
+                return await ctx.prisma.post.delete({
+                    where:{
+                        id
+                    }
+                })
+            }
+        })
+    }
+})
+
 
 ////////////////////////////////////////////////////
 
