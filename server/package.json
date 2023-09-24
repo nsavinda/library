@@ -5,7 +5,13 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "dev": "ts-node-dev --respawn ./src/index.ts"
+    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "p:dev": "prisma migrate dev",
+    "p:deploy": "prisma migrate deploy",
+    "p:generate": "prisma generate",
+    "docker:db": "docker-compose -f docker-compose.db.yml up -d"
+
+
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
