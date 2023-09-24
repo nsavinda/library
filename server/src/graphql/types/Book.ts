@@ -1,21 +1,21 @@
-import { objectType, extendType, nonNull, stringArg } from "nexus";
+import { objectType, extendType, nonNull, intArg, stringArg } from "nexus";
 import { Author } from "./Author";
 
 export const Book = objectType({
-    name:'Book',
-    definition(t){
-        t.string('id');
+    name: 'Book',
+    definition(t) {
+        t.int('id');
         t.string('title');
         t.string('isbn');
         t.string('publisher');
-        t.string('authorId');
-        t.field('author',{
-            type:Author,
-            async resolve(_parent,_args,ctx){
+        t.int('authorId'); // Change to int
+        t.field('author', {
+            type: Author,
+            async resolve(_parent, _args, ctx) {
                 return await ctx.prisma.book
                     .findUnique({
-                        where:{
-                            id: _parent.id as string
+                        where: {
+                            id: _parent.id as number // Change to number
                         },
                     })
                     .author()
@@ -25,11 +25,11 @@ export const Book = objectType({
 })
 
 export const BookQuery = extendType({
-    type:'Query',
-    definition(t){
-        t.nonNull.list.field('books',{
-            type:Book,
-            resolve(_parent,_args,ctx){
+    type: 'Query',
+    definition(t) {
+        t.nonNull.list.field('books', {
+            type: Book,
+            resolve(_parent, _args, ctx) {
                 return ctx.prisma.book.findMany();
             }
         })
@@ -37,20 +37,20 @@ export const BookQuery = extendType({
 })
 
 export const BookCreate = extendType({
-    type:'Mutation',
-    definition(t){
-        t.nonNull.field('createBook',{
-            type:Book,
-            args:{
+    type: 'Mutation',
+    definition(t) {
+        t.nonNull.field('createBook', {
+            type: Book,
+            args: {
                 title: nonNull(stringArg()),
                 isbn: nonNull(stringArg()),
                 publisher: nonNull(stringArg()),
-                authorId: nonNull(stringArg())
+                authorId: nonNull(intArg()) // Change to intArg
             },
-            async resolve(_parent, args, ctx){
-                const {title, isbn, publisher, authorId} = args;
+            async resolve(_parent, args, ctx) {
+                const { title, isbn, publisher, authorId } = args;
                 return await ctx.prisma.book.create({
-                    data:{
+                    data: {
                         title,
                         isbn,
                         publisher,
@@ -62,19 +62,18 @@ export const BookCreate = extendType({
     }
 })
 
-
 export const BookDelete = extendType({
-    type:'Mutation',
+    type: 'Mutation',
     definition(t) {
-        t.nonNull.field('deleteBook',{
-            type:Book,
-            args:{
-                id: nonNull(stringArg()),
+        t.nonNull.field('deleteBook', {
+            type: Book,
+            args: {
+                id: nonNull(intArg()) // Change to intArg
             },
-            async resolve(_parent, args, ctx){
-                const {id} = args;
+            async resolve(_parent, args, ctx) {
+                const { id } = args;
                 return await ctx.prisma.book.delete({
-                    where:{
+                    where: {
                         id: id
                     }
                 })
