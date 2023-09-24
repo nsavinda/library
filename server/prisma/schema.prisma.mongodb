@@ -6,38 +6,37 @@ generator client {
   // previewFeatures = ["mongodb"]
 }
 
-datasource postgres {
-  provider = "postgresql"
-  url      = env("DB_URL")
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  // postgresql
-  id Int @id @default(autoincrement())
-  name String 
-  username String @unique
-  email String @unique
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  username String
+  email String
   posts Post[]
 }
 
 model Post {
-  id Int @id @default(autoincrement()) 
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   user User @relation(fields: [userId],references: [id], onDelete: Cascade)
-  userId Int 
+  userId String @db.ObjectId
 }
 
 model Book {
-  id Int @id @default(autoincrement()) 
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
-  isbn String @unique
+  isbn String
   publisher String
   author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId Int
+  authorId String @db.ObjectId
 }
 
 model Author {
-  id Int @id @default(autoincrement()) 
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   dob DateTime
   books Book[]

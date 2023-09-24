@@ -1,58 +1,52 @@
-import { objectType, extendType, nonNull, stringArg } from "nexus";
+import { objectType, extendType, nonNull, intArg, stringArg } from "nexus";
 import { User } from "./User";
 
 export const Post = objectType({
     name: 'Post',
-    definition(t){
-        t.string('id');
+    definition(t) {
+        t.int('id'); // Change to int
         t.string('title');
-        t.string('userId')
-        t.field('user',{
-            type:User,  
-            async resolve(_parent,_args,ctx) {
+        t.int('userId'); // Change to int
+        t.field('user', {
+            type: User,
+            async resolve(_parent, _args, ctx) {
                 return await ctx.prisma.post
                     .findUnique({
-                        where:{
-                            id: _parent.id as string
+                        where: {
+                            id: _parent.id as number // Change to number
                         },
                     })
                     .user();
             }
-
         })
     }
 })
 
-
-
-
 export const PostQuery = extendType({
-    type:'Query',
-    definition(t){
-        t.nonNull.list.field('posts',{
-            type:'Post',
-            resolve(_parent,_args, ctx){
+    type: 'Query',
+    definition(t) {
+        t.nonNull.list.field('posts', {
+            type: 'Post',
+            resolve(_parent, _args, ctx) {
                 return ctx.prisma.post.findMany();
             }
         })
     }
 })
 
-
-// mutations
-export const PostMutation = extendType({
-    type:'Mutation',
-    definition(t){
-        t.nonNull.field('createPost',{
-            type:'Post',
-            args:{
+export const PostCreate = extendType({
+    type: 'Mutation',
+    definition(t) {
+        t.nonNull.field('createPost', {
+            type: 'Post',
+            args: {
                 title: nonNull(stringArg()),
-                userId: nonNull(stringArg())
+                userId: nonNull(intArg()) // Change to intArg
             },
-            async resolve(_parent, args, ctx){
-                const {title, userId} = args;
+            async resolve(_parent, args, ctx) {
+                const { title, userId } = args;
                 return await ctx.prisma.post.create({
-                    data:{
+                    data: {
                         title,
                         userId
                     }
@@ -62,19 +56,18 @@ export const PostMutation = extendType({
     }
 })
 
-//  delete post
-export const PostDeleteMutation = extendType({
-    type:'Mutation',
-    definition(t){
-        t.nonNull.field('deletePost',{
-            type:'Post',
-            args:{
-                id: nonNull(stringArg())
+export const PostDelete = extendType({
+    type: 'Mutation',
+    definition(t) {
+        t.nonNull.field('deletePost', {
+            type: 'Post',
+            args: {
+                id: nonNull(intArg()) // Change to intArg
             },
-            async resolve(_parent, args, ctx){
-                const {id} = args;
+            async resolve(_parent, args, ctx) {
+                const { id } = args;
                 return await ctx.prisma.post.delete({
-                    where:{
+                    where: {
                         id
                     }
                 })
@@ -82,6 +75,7 @@ export const PostDeleteMutation = extendType({
         })
     }
 })
+
 
 
 ////////////////////////////////////////////////////

@@ -5,14 +5,14 @@
 type Author {
   books: [Book]
   dob: Datetime
-  id: String
+  id: Int
   name: String
 }
 
 type Book {
   author: Author
-  authorId: String
-  id: String
+  authorId: Int
+  id: Int
   isbn: String
   publisher: String
   title: String
@@ -22,21 +22,20 @@ scalar Datetime
 
 type Mutation {
   createAuthor(dob: String!, name: String!): Author!
-  createBook(authorId: String!, isbn: String!, publisher: String!, title: String!): Book!
-  createPost(title: String!, userId: String!): Post!
+  createBook(authorId: Int!, isbn: String!, publisher: String!, title: String!): Book!
+  createPost(title: String!, userId: Int!): Post!
   createUser(email: String!, name: String!, username: String!): User!
-  deleteAuthor(id: String!): Author!
-  deleteBook(id: String!): Book!
-  deletePost(id: String!): Post!
-  deleteUser(id: String!): User!
-  deleteUserWithPosts(id: String!): User!
+  deleteAuthor(id: Int!): Author!
+  deleteBook(id: Int!): Book!
+  deletePost(id: Int!): Post!
+  deleteUser(id: Int!): User!
 }
 
 type Post {
-  id: String
+  id: Int
   title: String
   user: User
-  userId: String
+  userId: Int
 }
 
 type Query {
@@ -48,7 +47,7 @@ type Query {
 
 type User {
   email: String
-  id: String
+  id: Int
   name: String
   posts: [Post]
   username: String
